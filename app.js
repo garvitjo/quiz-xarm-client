@@ -82,6 +82,7 @@ function getQuestion() {
         .then(response => response.json())
         .then(data => {
             questionsData = data;
+            localStorage.setItem('questions' , data);
         })
         .catch(error => console.error(error));
     }

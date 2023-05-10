@@ -13,7 +13,7 @@ let questionStatement;
 let options;
 let correctAnswer;
 
-const timeAllowed = 2;
+const timeAllowed = 30;
 let currentTime = 0;
 let timeScore = 0;
 let shouldTimerRun =true;
