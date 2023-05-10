@@ -11,7 +11,7 @@ let thisPlayer;
 let otherPlayers = new Map();
 let socket;
 
-let baseURL = 'https://quiz-xarm-jumbleword.onrender.com/'
+let baseURL = 'https://quiz-xarm-jumbleword.onrender.com'
 //only for testing purpose
 // hidePage(beginScreenContainer);
 // unhidePage(finalScreenContainer);
