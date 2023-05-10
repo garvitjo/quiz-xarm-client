@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jumble Quiz</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <div class="logo"></div>
+    <div id="begin-page">
+        <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
+        <h1 id="choose-gamemode">Choose game mode</h1>
+        <button class="btn btn-large" onclick="beginGameSinglePlayer()">Single Player</button>
+        <button class="btn btn-large" onclick="beginGameDoublePlayer()">Multi Player</button>
+        <button class="icon-btn" id="fullscreen-button" onclick="enterFullscreen()"></button>
+    </div>
+    <div id="home-page" class="hidden">
+        <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
+        <img src="./assets/rules-page-blue.png" id="rules-page-blue">
+        <div id="input-name-container">
+            <label for="playerName">Please enter your name</label>
+            <input type="text" autocomplete="off" autofocus name="user-name" placeholder="Enter your Name" class="username" id="playerName">
+        </div>
+        <button onclick="getName()" class="btn btn-large">Start now</button>
+    </div>
+    <div id="waiting-page" class="hidden">
+        <h1>Waiting for other players to take up the Word challenge...</h1>
+    </div>
+    <div id="game-screen" class="hidden">
+        <div class="countdown" id="timer">30</div>
+        <div class="question-area">
+            <div class="answer-area" id ="answer-area">
+            </div>
+            <div class="option-area" id="option-box">
+            </div>
+            <button class="btn" onclick="validateAnswer()" id="submitButtonQuiz" disabled = "true">Submit</button>
+            <div id="clue">Clue</div>
+            <div class="question" id="question-statement"></div>
+        </div>
+    </div>
+    <div class="endScreen hidden" id="endScreen">
+        <div class="leaderboard" id="leaderboard-final">
+            <div class="leaderboard-title"><h1>Leaderboard</h1></div>
+            <div class="row row-heading">
+                <h1>Name</h1>
+                <h1>Position</h1>
+            </div>
+            <div id="player-rows-start">
+                <div class="row">
+                    <h1>player 1</h1>
+                    <h1>First</h1>
+                </div>
+                <div class="row">
+                    <h1>player 2</h1>
+                    <h1>First</h1>
+                </div>
+            </div>
+        </div>
+        <div class="waiting-for-quiz-to-end" id="waiting-for-quizEnd">Waiting for other player's quiz to end...</div>
+        <button onclick="continueFromLeaderboard()" class="btn">Continue</button>
+    </div>
+    <div class ="finalScreenContainer hidden" id="finalScreen">
+        <img src="./assets/do-you-have-power-of-search.png" id="do-you-have-power-of-search">
+        <img src="./assets/final-screen-congratulation.png" id="rules-page-blue">
+        <button onclick="restartQuiz()" class="btn">Restart</button>
+    </div>
+
+
+    <section class="Audio-Section">
+        <audio src="./assets/audio/correctAnswer.mp3" id="correctAnswerAudio"></audio>
+        <audio src="./assets/audio/optionClick.mp3" id="optionClickAudio"></audio>
+        <audio src="./assets/audio/quizCompleted.mp3" id="quizCompletedAudio"></audio>
+        <audio src="./assets/audio/wrongAnswer.mp3" id="wrongAnswerAudio"></audio>
+    </section>
+    <script src="https://quiz-xarm-jumbleword.onrender.com/socket.io/socket.io.js"></script>
+    <script src="./app.js"></script>
+    <script src="./quizManager.js"></script>
+</body>
+</html>
