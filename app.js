@@ -219,11 +219,10 @@ function openWebsocketConnection(){
   socket = io(baseURL);
 
   socket.on('connect', () => {
-    console.log("connected: ", socket.id);
   });
   
   socket.on('disconnect', () => {
-    console.log('Disconnected from the server');
+
   });
   
   socket.on("this-player",(tempPlayer)=>{
