@@ -13,6 +13,7 @@ let socket;
 
 let baseURL = 'https://quiz-xarm-jumbleword.onrender.com'
 //only for testing purpose
+//baseURL = 'http://localhost:8080';
 // hidePage(beginScreenContainer);
 // unhidePage(finalScreenContainer);
 
@@ -42,7 +43,6 @@ function enterFullscreen() {
   function beginGameDoublePlayer(){
     isSinglePlayerGame = false;
     openWebsocketConnection();
-    beginButtonClicked();
   }
 
 function beginButtonClicked() {
@@ -64,25 +64,20 @@ function getName() {
 
     socket.emit('update-player-details', thisPlayer);
     socket.emit("ready-to-start-game", thisPlayer);
-    hidePage(homeScreenContainer);
-    unhidePage(waitingScreenContainer);
 }
 
 
 function getQuestion() {
-
-    let cachedData = localStorage.getItem('questions');
-
+    let cachedData = JSON.parse(localStorage?.getItem('questions'));
     if (cachedData) {
-        questionsData = JSON.parse(cachedData);
-        console.log("fetched from the cache");
+        questionsData = cachedData;
     } else {
         // Fetch the data from the server and cache it
         fetch(baseURL + '/questions')
         .then(response => response.json())
         .then(data => {
             questionsData = data;
-            //localStorage.setItem('questions' , data);
+            localStorage.setItem('questions' , JSON.stringify(data));
         })
         .catch(error => console.error(error));
     }
@@ -165,7 +160,6 @@ function calculateScore(players){
 }
 
 function startTheGame(){
-  hidePage(homeScreenContainer);
   hidePage(waitingScreenContainer);
   unhidePage(gameScreenContainer);
   startQuiz(questionsData);
@@ -221,11 +215,15 @@ function openWebsocketConnection(){
   socket.on('connect', () => {
   });
   
+  socket.on('cannot-connect-now',()=>{
+    alert("Some Other multiplayer game is going on, please wait for it to finish");
+  });
+  
   socket.on('disconnect', () => {
-
   });
   
   socket.on("this-player",(tempPlayer)=>{
+    beginButtonClicked();
     thisPlayer = tempPlayer;
   });
 
@@ -248,8 +246,17 @@ function openWebsocketConnection(){
     }
   });
 
+  socket.on("ok-marked-you-ready",()=>{
+    hidePage(homeScreenContainer);
+    unhidePage(waitingScreenContainer);  
+  });
+
   socket.on("start-the-game",()=>{
     startTheGame();
+  });
+
+  socket.on("only-one-player",()=>{
+    alert("You are the only player in the game currently, wait of another player to join multiplayer game, or play single player instead");
   });
 
   socket.on("show-leaderboard", (players)=>{
@@ -263,9 +270,10 @@ function openWebsocketConnection(){
   })
 
   window.addEventListener('beforeunload', function(event) {
-    
-    if(wannaQuit){
-      socket.emit('disconnecting', socket.id);
-    }
+    e.preventDefault();
+    e.returnValue = 'Are you sure you want to quit?';
+
+    if(socket){socket.disconnect = true;}
+    return e.returnValue;
   });
 }
