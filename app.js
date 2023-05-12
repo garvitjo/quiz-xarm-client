@@ -54,7 +54,6 @@ function beginButtonClicked() {
 
 function getName() {
     let name = document.getElementById("playerName").value.trim();
-    debugger;
     if(name == ""){
       alert("Please enter your name");
       return;
