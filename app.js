@@ -13,7 +13,7 @@ let socket;
 
 let baseURL = 'https://quiz-xarm-jumbleword.onrender.com'
 //only for testing purpose
-//baseURL = 'http://localhost:8080';
+baseURL = 'http://localhost:8080';
 // hidePage(beginScreenContainer);
 // unhidePage(finalScreenContainer);
 
@@ -53,8 +53,17 @@ function beginButtonClicked() {
 }
 
 function getName() {
-    thisPlayer.playerName = document.getElementById("playerName").value;
-
+    let name = document.getElementById("playerName").value.trim();
+    debugger;
+    if(name == ""){
+      alert("Please enter your name");
+      return;
+    }else if(!/^[a-zA-Z ]+$/.test(name)){
+      alert("Please enter a valid name");
+      return;
+    }
+    thisPlayer.playerName = name;
+    
     if(isSinglePlayerGame){
       hidePage(homeScreenContainer);
       unhidePage(gameScreenContainer);
