@@ -13,7 +13,7 @@ let socket;
 
 let baseURL = 'https://quiz-xarm-jumbleword.onrender.com'
 //only for testing purpose
-baseURL = 'http://localhost:8080';
+//baseURL = 'http://localhost:8080';
 // hidePage(beginScreenContainer);
 // unhidePage(finalScreenContainer);
 
